@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+	select{
+		margin-left: 8px;
+	}
+	table,th,td{
+		border: 1px solid black;
+		padding: 5px;
+	}
+</style>
+	<title>Events Page</title>
+</head>
+<body>
+<div class='toolbar'><a href="/users/<%= current_user.id %>/edit">Edit Profile</a></div>
+
+<h2>Welcome <%= @user.first_name %></h2>
+
+<p>Here are some of the events at your state</p>
+
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Date</th>
+		<th>Location</th>
+		<th>Host</th>
+		<th>Action/Status</th>
+	</tr>
+	<tr>
+	<% @state_events.each do |e| %>
+		<td><a href="/events/<%= e.id %>"><%= e.name %></a></td>
+		<td><%= e.date.strftime('%b %e, %G') %></td>
+		<td><%= e.city %></td>
+		<td><%= e.user.first_name %></td>
+		<td><% if current_user.id == e.user.id %>
+				<%= link_to "Edit", "/events/#{e.id}/edit", { controller: 'events', action: 'edit', id: e.id } %> <%= link_to "Delete", "/events/#{e.id}", { controller: 'events', action: 'destroy', id: e.id, method: 'delete' } %></a>
+			<% elsif current_user.events_attended.include?(e) %>
+				<b>Joined</b> | <%= link_to "Cancel", "/attends/#{e.id}", { controller: 'attends', action: 'destroy', id: e.id, method: 'delete' } %>
+			<% else %>
+				<%= link_to "Join", "/attends/create/#{e.id}", { controller: 'attends', action: 'create', id: e.id, method: 'post' } %>
+			<% end %>
+		</td>
+	</tr>
+	<% end %>
+</table>
+<p>Here are some of the events on other states</p>
+<table>
+	<tr>
+		<th>Name</th>
+		<th>Date</th>
+		<th>Location</th>
+		<th>State</th>
+		<th>Host</th>
+		<th>Action</th>
+	</tr>
+	<% @other_events.each do |event| %>
+	<tr>
+		<td><a href="/events/<%= event.id %>"><%= event.name %></a></td>
+		<td><%= event.date.strftime('%b %e, %G') %></td>
+		<td><%= event.city %></td>
+		<td><%= event.state %></td>
+		<td><%= event.user.first_name %></td>
+		<td><% if current_user.id == event.user.id %>
+				<a href="/events/#{event.id}/edit">Edit</a> <%= link_to "Delete", "/events/#{event.id}", { controller: 'events', action: 'destroy', id: event.id, method: 'delete' } %></a>
+			<% elsif current_user.events_attended.include?(event) %>
+				<b>Joined</b> | <%= link_to "Cancel", "/attends/#{event.id}", { controller: 'attends', action: 'destroy', id: event.id, method: 'delete' } %>
+			<% else %>
+				<%= link_to "Join", "/attends/create/#{event.id}", { controller: 'attends', action: 'create', id: event.id, method: 'post' } %>
+			<% end %></td>
+	</tr>
+	<% end %>
+</table>
+
+<h2>Add Event</h2>
+
+<form action='/events/create' method='post'>
+	<input type="hidden" name="authenticity_token" value='<%= form_authenticity_token %>'>
+	<p>Name: <input type="text" name="event[name]"></p>
+	<p>Date: <input type="date" name="event[date]"></p>
+	<p>City: <input type="text" name="event[city]">
+		<select name='event[state]'>
+			<option>AL</option><option>AK</option><option>AR</option><option>AZ</option>
+			<option>CA</option><option>CO</option><option>CT</option>
+			<option>DE</option><option>FL</option><option>GA</option>
+			<option>HI</option><option>IA</option><option>ID</option>
+			<option>IL</option><option>IN</option><option>KS</option>
+			<option>KY</option><option>LA</option><option>MA</option>
+			<option>MD</option><option>ME</option><option>MI</option>
+			<option>MN</option><option>MO</option><option>MS</option>
+			<option>MT</option><option>NC</option><option>ND</option>
+			<option>NE</option><option>NH</option><option>NJ</option>
+			<option>NM</option><option>NV</option><option>NY</option>
+			<option>OH</option><option>OK</option><option>OR</option>
+			<option>PA</option><option>RI</option><option>SC</option>
+			<option>SD</option><option>TN</option><option>TX</option>
+			<option>UT</option><option>VA</option><option>VT</option>
+			<option>WA</option><option>WI</option><option>WV</option><option>WY</option>
+		</select></p></p>
+	<input type="submit" value="Add Event">
+</form>
+
+</body>
+</html>
+
+
+
+
+
+
+

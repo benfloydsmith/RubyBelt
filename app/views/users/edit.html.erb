@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Edit Profile</title>
+</head>
+<body>
+<a href="/events">Events Dashboard</a>
+
+<h2>Edit your Profile</h2>
+<hr>
+<form action='/users/:id' method='post'>
+	<input type="hidden" name="authenticity_token" value='<%= form_authenticity_token %>'>
+	<input type="hidden" name="_method" value='patch'>
+	<p>First Name: <input type="text" name="user[first_name]" value='<%= current_user.first_name %>'></p>
+	<p>Last Name: <input type="text" name="user[last_name]" value='<%= current_user.last_name %>'></p>
+	<p>Email: <input type="email" name="user[email]" value='<%= current_user.email %>'></p>
+	<p>City: <input type="text" name="user[city]" value='<%= current_user.city %>'>
+		<select name='user[state]'>
+			<option><%= current_user.state %><option>AL</option><option>AK</option><option>AR</option><option>AZ</option>
+			<option>CA</option><option>CO</option><option>CT</option>
+			<option>DE</option><option>FL</option><option>GA</option>
+			<option>HI</option><option>IA</option><option>ID</option>
+			<option>IL</option><option>IN</option><option>KS</option>
+			<option>KY</option><option>LA</option><option>MA</option>
+			<option>MD</option><option>ME</option><option>MI</option>
+			<option>MN</option><option>MO</option><option>MS</option>
+			<option>MT</option><option>NC</option><option>ND</option>
+			<option>NE</option><option>NH</option><option>NJ</option>
+			<option>NM</option><option>NV</option><option>NY</option>
+			<option>OH</option><option>OK</option><option>OR</option>
+			<option>PA</option><option>RI</option><option>SC</option>
+			<option>SD</option><option>TN</option><option>TX</option>
+			<option>UT</option><option>VA</option><option>VT</option>
+			<option>WA</option><option>WI</option><option>WV</option><option>WY</option>
+		</select></p>
+	<input type="submit" value="Update Records">
+</form>
+</body>
+</html>

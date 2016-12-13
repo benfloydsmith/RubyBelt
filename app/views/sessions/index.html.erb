@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+	#register{
+		display: inline-block;
+		margin: 4px;
+	}
+	#login{
+		display: inline-block;
+		margin: 4px;
+		vertical-align: top;
+	}
+</style>
+	<title>Login and Registration</title>
+</head>
+<body>
+
+<h1>Welcome!</h1>
+<div id='register'>
+<fieldset>
+	<legend><h2>Register</h2></legend>
+		<form action='/users/create' method='post'>
+			<input type="hidden" name="authenticity_token" value='<%= form_authenticity_token %>'>
+			<p>First Name: <input type="text" name="user[first_name]"></p>
+			<p>Last Name: <input type="text" name="user[last_name]"></p>
+			<p>Email: <input type="email" name="user[email]"></p>
+			<p>Street: <input type="text" name="user[street]"></p>
+			<p>City: <input type="text" name="user[city]">
+				<select name='user[state]'>
+					<option>AL</option><option>AK</option><option>AR</option><option>AZ</option>
+					<option>CA</option><option>CO</option><option>CT</option>
+					<option>DE</option><option>FL</option><option>GA</option>
+					<option>HI</option><option>IA</option><option>ID</option>
+					<option>IL</option><option>IN</option><option>KS</option>
+					<option>KY</option><option>LA</option><option>MA</option>
+					<option>MD</option><option>ME</option><option>MI</option>
+					<option>MN</option><option>MO</option><option>MS</option>
+					<option>MT</option><option>NC</option><option>ND</option>
+					<option>NE</option><option>NH</option><option>NJ</option>
+					<option>NM</option><option>NV</option><option>NY</option>
+					<option>OH</option><option>OK</option><option>OR</option>
+					<option>PA</option><option>RI</option><option>SC</option>
+					<option>SD</option><option>TN</option><option>TX</option>
+					<option>UT</option><option>VA</option><option>VT</option>
+					<option>WA</option><option>WI</option><option>WV</option><option>WY</option>
+				</select></p>
+			<p>Zip: <input type="text" name="user[zip]"></p>
+			<p>Password: <input type="password" name="user[password]" placeholder="Min of 8 Characters"></p>
+			<p>Confirm Password<input type="password" name="user[password_confirmation]"></p>
+			<p><input type="submit" value="Register"></p>
+		</form>
+</fieldset>
+</div>
+<div id='login'>
+	<fieldset>
+		<legend><h2>Login</h2></legend>
+		<form action='/sessions/create' method='post'>
+			<input type="hidden" name="authenticity_token" value='<%= form_authenticity_token %>'>
+			<p>Email: <input type="email" name="user[email]"></p>
+			<p>Password: <input type="password" name="user[password]"></p>
+			<input type="submit" value='Login'>
+		</form>
+	</fieldset>
+</div>
+
+</body>
+</html>

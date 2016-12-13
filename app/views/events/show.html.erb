@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+	#topbox{
+		border: 1px solid black;
+		padding: 3px;
+		margin: 10px;
+		width: 500px;
+		height: 200px;
+		overflow: scroll;
+	}
+
+</style>
+	<title>Edit Event</title>
+</head>
+<body>
+<a href="/events">Events Dashboard</a>
+
+<h2><%= @event.name %></h2>
+<div class='left'>
+	<p>Host: <%= @event.user.first_name %> <%= @event.user.last_name %></p>
+	<p>Date: <%= @event.date %></p>
+	<p>Location: <%= @event.city %>, <%= @event.state %></p>
+	<p>People who are joining the event: <%= @event.users.count %></p>
+
+<br>
+ <table>
+ 	<tr>
+ 		<th>Name</th>
+ 		<th>Location</th>
+ 		<th>State</th>
+ 	</tr>
+ 	<tr>
+ 		<td><%= @event.user.first_name %> <%= @event.user.last_name %></td>
+ 		<td><%= @event.user.city %></td>
+ 		<td><%= @event.user.state %></td>
+ 	</tr>
+ </table>
+</div>
+<div class='right'>
+	<p>Discussion about this Event:</p>
+	<div class='box'>
+	<div id='topbox'>
+
+		<% @comment.each do |x| %>
+		<p><%= x.user.first_name %> says: <%= x.content %></p>
+		<p>---------------------</p>
+		<% end %>
+	</div>
+	<br>
+	<p>Add Comment</p>
+	<form action="/comments/create" method="post">
+		<input type="hidden" name="authenticity_token" value='<%= form_authenticity_token %>'>
+		<input type="hidden" name="comment[event]" value="<%= @event.id %>">
+		<textarea name='comment[content]' rows='5', cols='70'></textarea>
+		<p><input type="submit" value="Submit Comments"></p>
+	</form>
+	</div>
+</div>
+</body>
+</html>
+
+
+
